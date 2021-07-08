@@ -3,6 +3,8 @@ import { listReservations } from "../utils/api";
 import { previous, today, next } from "../utils/date-time";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
+import ReservationRow from "./ReservationRow";
+import TableRow from "./TableRow";
 
 /**
  * Defines the dashboard page.
@@ -29,6 +31,16 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
+  const reservationsJSX = () => {
+    return reservations.map((reservation) => 
+      <ReservationRow key={reservation.reservation_id} reservation={reservation} />);
+  };
+
+  const tablesJSX = () => {
+    return tables.map((table) => 
+      <TableRow key={table.table_id} table={table} />);
+  };
+
   return (
     <main>
       <h1>Dashboard</h1>
@@ -49,7 +61,7 @@ function Dashboard({ date }) {
           </tr>
         </thead>
         <tbody>
-
+          {reservationsJSX()}
         </tbody>
       </table>
 
@@ -66,7 +78,7 @@ function Dashboard({ date }) {
           </tr>
         </thead>
         <tbody>
-
+          {tablesJSX()}
         </tbody>
       </table>
       

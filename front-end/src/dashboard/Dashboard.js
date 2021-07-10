@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import React from "react";
 import { previous, today, next } from "../utils/date-time";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
@@ -12,81 +11,159 @@ import TableRow from "./TableRow";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
-  const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
-  const [tables, setTables] = useState([]);
-  const [tablesError, setTablesError] = useState(null);
-
+ function Dashboard({
+  date,
+  reservations,
+  reservationsError,
+  tables,
+  tablesError,
+  loadDashboard,
+}) {
   const history = useHistory();
 
-  useEffect(loadDashboard, [date]);
-
-  function loadDashboard() {
-    const abortController = new AbortController();
-    setReservationsError(null);
-    listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setReservationsError);
-    return () => abortController.abort();
-  }
-
   const reservationsJSX = () => {
-    return reservations.map((reservation) => 
-      <ReservationRow key={reservation.reservation_id} reservation={reservation} />);
+    return reservations.map((reservation) => (
+      <ReservationRow
+        key={reservation.reservation_id}
+        reservation={reservation}
+        loadDashboard={loadDashboard}
+      />
+    ));
   };
 
   const tablesJSX = () => {
-    return tables.map((table) => 
-      <TableRow key={table.table_id} table={table} />);
+    return tables.map((table) => (
+      <TableRow
+        key={table.table_id}
+        table={table}
+        loadDashboard={loadDashboard}
+      />
+    ));
   };
 
+  function handleClick({ target }) {
+    let newDate;
+    let useDate;
+
+    if (!date) {
+      useDate = today();
+    } else {
+      useDate = date;
+    }
+
+    if (target.name === "previous") {
+      newDate = previous(useDate);
+    } else if (target.name === "next") {
+      newDate = next(useDate);
+    } else {
+      newDate = today();
+    }
+
+    history.push(`/dashboard?date=${newDate}`);
+  }
+
   return (
-    <main>
+    <main className="main">
       <h1>Dashboard</h1>
-      <h4 className="mb-0">Reservations for {date}</h4>
+
+      <h4>Reservations for {date}</h4>
+
       <ErrorAlert error={reservationsError} />
 
-      <table class="table">
-        <thead class="thead-light">
-		      <tr>
-		        <th scope="col">ID</th>
-		        <th scope="col">First Name</th>
-		        <th scope="col">Last Name</th>
-		        <th scope="col">Mobile Number</th>
-		        <th scope="col">Time</th>
-		        <th scope="col">People</th>
-		        <th scope="col">Status</th>
-		        <th scope="col">Edit</th>
-		        <th scope="col">Cancel</th>
-		        <th scope="col">Seat</th>
-		      </tr>
-	</thead>
-        <tbody>
-          {reservationsJSX()}
-        </tbody>
-      </table>
-
-      <h4 className="mb-0">Tables</h4>
-      <ErrorAlert error={tablesError} />
-
-      <table class="table">
+      <table className="reservations">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-					  <th scope="col">Table Name</th>
-					  <th scope="col">Capacity</th>
-					  <th scope="col">Status</th>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Mobile Number</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>People</th>
+            <th>Status</th>
+            <th>Edit</th>
+            <th>Cancel</th>
+            <th>Seat</th>
           </tr>
         </thead>
+
         <tbody>
-          {tablesJSX()}
+          {reservations.length ? (
+            reservationsJSX()
+          ) : (
+            <tr>
+              <th>--</th>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+          )}
         </tbody>
       </table>
-      
-			<button type="button" onClick={() => history.push(`/dashboard?date=${previous(date)}`)}>Previous</button>
-			<button type="button" onClick={() => history.push(`/dashboard?date=${today()}`)}>Today</button>
-			<button type="button" onClick={() => history.push(`/dashboard?date=${next(date)}`)}>Next</button>
+      <div className="buttons">
+        <button
+          className="buttonDash"
+          type="button"
+          name="previous"
+          onClick={handleClick}
+        >
+          Previous
+        </button>
+        <button
+          className="buttonDash"
+          type="button"
+          name="today"
+          onClick={handleClick}
+        >
+          Today
+        </button>
+        <button
+          className="buttonDash"
+          type="button"
+          name="next"
+          onClick={handleClick}
+        >
+          Next
+        </button>
+      </div>
+      <h4>Tables</h4>
+
+      <ErrorAlert error={tablesError} />
+
+      <table>
+        <thead>
+          <tr>
+            <th>Table ID</th>
+            <th>Table Name</th>
+            <th>Capacity</th>
+            <th>Status</th>
+            <th>Reservation ID</th>
+            <th>Finish</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {tables.length ? (
+            tablesJSX()
+          ) : (
+            <tr>
+              <th>--</th>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </main>
   );
 }

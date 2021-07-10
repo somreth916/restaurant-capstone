@@ -6,12 +6,15 @@ This is an application that demonstrates the ability to keep track of customer r
 [![dashboard2.png](https://i.postimg.cc/VNfv2qRz/dashboard2.png)](https://postimg.cc/zyQqgR6Q)
 
 ### Search
+#### The search allows a user to find a matching customer using their provided phone number.
 [![search.png](https://i.postimg.cc/pXBBwHb8/search.png)](https://postimg.cc/WhhrZx4b)
 
-### Creating a new Reservation
+### New Reservation
+#### This form allows a user to place a reservation for a specified date and time.
 [![reservation.png](https://i.postimg.cc/3xXH5Wr1/reservation.png)](https://postimg.cc/FYH60rLk)
 
-### Table Creation
+### New Table
+#### This form allows a user to create a table that can be used to show all available seating.
 [![newTable.png](https://i.postimg.cc/NFRws07Q/newTable.png)](https://postimg.cc/XBNPx4zP)
 
 ## Installation

@@ -41,6 +41,7 @@ import TableRow from "./TableRow";
     ));
   };
 
+  // Lets users go forward & backward on the calendar
   function handleClick({ target }) {
     let newDate;
     let useDate;

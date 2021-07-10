@@ -21,7 +21,7 @@ export default function New({ edit, loadDashboard }) {
   const { reservation_id } = useParams();
   const history = useHistory();
 
-  
+  // Places an API call to get all reservations for editing and submitting
   useEffect(() => {
     if (edit) {
       if (!reservation_id) return null;
@@ -73,6 +73,7 @@ export default function New({ edit, loadDashboard }) {
     });
   }
 
+  // Handles the submit and makes an API call
   function handleSubmit(event) {
     event.preventDefault();
     const abortController = new AbortController();
@@ -102,6 +103,7 @@ export default function New({ edit, loadDashboard }) {
     return () => abortController.abort();
   }
 
+  // Checks if all fields are filled out
   function validateFields(foundErrors) {
     for (const field in formData) {
       if (formData[field] === "") {
@@ -114,6 +116,7 @@ export default function New({ edit, loadDashboard }) {
     return foundErrors.length === 0;
   }
 
+  // Checks if date and time are within restaurant hours
   function validateDate(foundErrors) {
     const reserveDate = new Date(
       `${formData.reservation_date}T${formData.reservation_time}:00.000`

@@ -4,6 +4,7 @@ import { finishTable } from "../utils/api";
 export default function TableRow({ table, loadDashboard }) {
   if (!table) return null;
 
+  // Allows user to finish a table that is currently seated
   function handleFinish() {
     if (
       window.confirm(

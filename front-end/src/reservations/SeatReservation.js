@@ -13,7 +13,8 @@ export default function SeatReservation({ tables, loadDashboard }) {
 	const [apiError, setApiError] = useState(null);
   
 	const { reservation_id } = useParams();
-  
+	
+	// Makes an API call to get current reservations
 	useEffect(() => {
 	  const abortController = new AbortController();
   
@@ -31,7 +32,8 @@ export default function SeatReservation({ tables, loadDashboard }) {
 	function handleChange({ target }) {
 	  setTableId(target.value);
 	}
-  
+	
+	// Makes an API call on form submit
 	function handleSubmit(event) {
 	  event.preventDefault();
 	  const abortController = new AbortController();
@@ -45,7 +47,8 @@ export default function SeatReservation({ tables, loadDashboard }) {
   
 	  return () => abortController.abort();
 	}
-  
+	
+	// Checks if reservation can be made at current seat
 	function validateSeat() {
 	  const foundErrors = [];
   

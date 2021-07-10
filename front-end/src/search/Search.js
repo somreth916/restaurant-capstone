@@ -12,6 +12,7 @@ export default function Search() {
 	    setMobileNumber(target.value);
     }
 
+    // Makes an API call on form submit
     function handleSubmit(e) {
 	    e.preventDefault();
         const abortController = new AbortController();

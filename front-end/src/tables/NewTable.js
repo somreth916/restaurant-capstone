@@ -18,9 +18,10 @@ export default function NewTable({ loadDashboard }) {
 		  [target.name]:
 			target.name === "capacity" ? Number(target.value) : target.value,
 		});
-	  }
+	}
 
-	  function handleSubmit(event) {
+	// Makes an API call on form submit
+	function handleSubmit(event) {
 		event.preventDefault();
 	
 		const abortController = new AbortController();
@@ -33,8 +34,9 @@ export default function NewTable({ loadDashboard }) {
 		}
 	
 		return () => abortController.abort();
-	  }
+	}
 
+	// Checks if all fields are filled out
 	function validateFields() {
 		let foundError = null;
 

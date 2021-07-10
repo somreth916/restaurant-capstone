@@ -56,6 +56,7 @@ async function fetchJson(url, options, onCancel) {
  *  a promise that resolves to a possibly empty array of reservation saved in the database.
  */
 
+// Grabs all existing reservations
 export async function listReservations(params, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);
   if (params) {
@@ -67,6 +68,7 @@ export async function listReservations(params, signal) {
   return await fetchJson(url, { headers, signal, method: "GET" }, []);
 }
 
+// Creates a new reservation
 export async function createReservation(reservation, signal) {
 	const url = `${API_BASE_URL}/reservations`;
 	const body = JSON.stringify({ data: reservation });
@@ -74,6 +76,7 @@ export async function createReservation(reservation, signal) {
 	return await fetchJson(url, { headers, signal, method: "POST", body }, []);
 }
 
+// Updates reservation status
 export async function updateReservationStatus(reservation_id, status, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
   const body = JSON.stringify({ data: { status: status } });
@@ -81,6 +84,7 @@ export async function updateReservationStatus(reservation_id, status, signal) {
   return await fetchJson(url, { headers, signal, method: "PUT", body }, []);
 }
 
+// Edits existing reservation
 export async function editReservation(reservation_id, reservation, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}`;
   const body = JSON.stringify({ data: reservation });
@@ -88,12 +92,14 @@ export async function editReservation(reservation_id, reservation, signal) {
   return await fetchJson(url, { headers, signal, method: "PUT", body }, []);
 }
 
+// Grabs all existing tables
 export async function listTables(signal) {
   const url = `${API_BASE_URL}/tables`;
 
   return await fetchJson(url, { headers, signal, method: "GET" }, []);
 }
 
+// Creates a new table
 export async function createTable(table, signal) {
   const url = `${API_BASE_URL}/tables`;
   const body = JSON.stringify({ data: table });
@@ -101,6 +107,7 @@ export async function createTable(table, signal) {
   return await fetchJson(url, { headers, signal, method: "POST", body }, []);
 }
 
+// Seats a reservation at current table
 export async function seatTable(reservation_id, table_id, signal) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const body = JSON.stringify({ data: { reservation_id: reservation_id } });
@@ -108,6 +115,7 @@ export async function seatTable(reservation_id, table_id, signal) {
   return await fetchJson(url, { headers, signal, method: "PUT", body }, []);
 }
 
+// Deletes current table
 export async function finishTable(table_id, signal) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
 

@@ -2,8 +2,17 @@
 This is an application that demonstrates the ability to keep track of customer reservations and stores the information in a database. It was developed with HTML, CSS, JavaScript, React, PostgreSQL, Express, and Knex.
 
 ## Screenshots
-[![dashboard.png](https://i.postimg.cc/Rh9DT0mp/dashboard.png)](https://postimg.cc/7Gs9HwfS)
+### Dashboard
+[![dashboard2.png](https://i.postimg.cc/VNfv2qRz/dashboard2.png)](https://postimg.cc/zyQqgR6Q)
 
+### Search
+[![search.png](https://i.postimg.cc/pXBBwHb8/search.png)](https://postimg.cc/WhhrZx4b)
+
+### Creating a new Reservation
+[![reservation.png](https://i.postimg.cc/3xXH5Wr1/reservation.png)](https://postimg.cc/FYH60rLk)
+
+### Table Creation
+[![newTable.png](https://i.postimg.cc/NFRws07Q/newTable.png)](https://postimg.cc/XBNPx4zP)
 
 ## Installation
 
